@@ -3,6 +3,7 @@ package kr.co.tjoeun.listview_20200706
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kr.co.tjoeun.listview_20200706.adapters.StudentAdapter
 import kr.co.tjoeun.listview_20200706.datas.Student
@@ -32,5 +33,18 @@ class MainActivity : AppCompatActivity() {
 
 //        완성된 어뎁터를 리스트뷰와 연결
         studentListView.adapter = mAdapter
+
+//        학생 목록 리스트뷰 이벤트 처리
+        studentListView.setOnItemClickListener { parent, view, position, id ->
+
+//            각 줄을 누르면 "눌려진 사람의 이름"을 Toast로 출력
+
+//            눌려진 사람이 누군지
+            val clickedUser = mStudentList[position]
+
+//            토르트로 눌려진 사람의 이름을 출력한다.
+            Toast.makeText(this, clickedUser.name, Toast.LENGTH_SHORT).show()
+
+        }
     }
 }
