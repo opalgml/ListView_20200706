@@ -1,9 +1,11 @@
 package kr.co.tjoeun.listview_20200706
 
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import kr.co.tjoeun.listview_20200706.adapters.StudentAdapter
 import kr.co.tjoeun.listview_20200706.datas.Student
@@ -52,13 +54,26 @@ class MainActivity : AppCompatActivity() {
 //        학생 목록 Long_Click 이벤트 처리
         studentListView.setOnItemLongClickListener { parent, view, position, id ->
 
-//            오랫동안 클릭된 대상자를 명단에서 삭제
-            mStudentList.removeAt(position)
+//            AlertDialog
+            val deleteAlert = AlertDialog.Builder(this)
+            deleteAlert.setTitle("학생 명단 삭제")
+            deleteAlert.setMessage("정말 이 학생을 삭제하시겠습니까?")
+            deleteAlert.setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->  //setPositiveButton("버튼text", 실행내용)
+
+//                확인 클릭 시 arrayList.remove 처리
+                //            오랫동안 클릭된 대상자를 명단에서 삭제
+                mStudentList.removeAt(position)
 
 //            삭제 후 어뎁터 새로고침 처리
-            mAdapter.notifyDataSetChanged()
+                mAdapter.notifyDataSetChanged()
 
-//            주의사항 -> LongClick이벤트는 반드시 리턴 처리 필수
+            })
+
+            deleteAlert.setNegativeButton("취소", null)
+            deleteAlert.show()
+
+
+//            주의사항 -> LongClick이벤트는 반드시 리턴 처리 필수 (RETURN TYPE -> BOOLEAN)
             return@setOnItemLongClickListener true
 
         }
